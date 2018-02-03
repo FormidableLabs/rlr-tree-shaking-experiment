@@ -23,6 +23,7 @@ module.exports = ENTRY_POINTS.map((e) => ({
   devtool: false,
   module: {
     rules: [
+      // https://github.com/webpack/webpack/issues/6065#issuecomment-351060570
       {
         include: require.resolve("redux-little-router"),
         sideEffects: false
