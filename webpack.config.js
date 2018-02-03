@@ -21,6 +21,14 @@ module.exports = ENTRY_POINTS.map((e) => ({
     pathinfo: true
   },
   devtool: false,
+  module: {
+    rules: [
+      {
+        include: require.resolve("redux-little-router"),
+        sideEffects: false
+      }
+    ]
+  },
   plugins: [
     new UglifyJsPlugin({
       uglifyOptions: {
