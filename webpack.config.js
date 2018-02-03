@@ -10,6 +10,7 @@ const ENTRY_POINTS = [
 ]
 
 module.exports = ENTRY_POINTS.map((e) => ({
+  mode: "development",
   context: path.resolve("src"),
   entry: {
     [e]: `./${e}.js`
@@ -19,18 +20,20 @@ module.exports = ENTRY_POINTS.map((e) => ({
     filename: "[name].js",
     pathinfo: true
   },
+  devtool: false,
   plugins: [
-    // TODO: WHY IS EVERYTHING STILL MINIFIED????
-    // new UglifyJsPlugin({
-    //   uglifyOptions: {
-    //     compress: true,
-    //     mangle: false,    // DEMO ONLY: Don't change variable names.
-    //     beautify: true,   // DEMO ONLY: Preserve whitespace
-    //     output: {
-    //       comments: true  // DEMO ONLY: Helpful comments
-    //     }
-    //   },
-    //   sourceMap: false
-    // })
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          dead_code: true   // Only DCE
+        },
+        mangle: false,      // DEMO ONLY: Don't change variable names.
+        output: {
+          comments: true,   // DEMO ONLY: Helpful comments
+          beautify: true    // DEMO ONLY: Preserve whitespace
+        }
+      },
+      sourceMap: false
+    })
   ]
 }));
