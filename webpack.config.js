@@ -2,6 +2,7 @@
 
 const path = require("path");
 const webpack = require("webpack");
+const SideEffectsFlagPlugin = require("webpack/lib/optimize/SideEffectsFlagPlugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const ENTRY_POINTS = [
@@ -22,6 +23,9 @@ module.exports = ENTRY_POINTS.map((e) => ({
   },
   devtool: false,
   module: {
+    // TODO: Make the rule work from **just** webpack config.
+    // Setting `redux-little-router/package.json:sideEffects = false` works,
+    // but I can't get the override only here to work.
     rules: [
       // https://github.com/webpack/webpack/issues/6065#issuecomment-351060570
       {
@@ -31,6 +35,7 @@ module.exports = ENTRY_POINTS.map((e) => ({
     ]
   },
   plugins: [
+    new SideEffectsFlagPlugin(),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
