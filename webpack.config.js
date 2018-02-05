@@ -2,7 +2,6 @@
 
 const path = require("path");
 const webpack = require("webpack");
-const SideEffectsFlagPlugin = require("webpack/lib/optimize/SideEffectsFlagPlugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const ENTRY_POINTS = [
@@ -22,6 +21,9 @@ module.exports = ENTRY_POINTS.map((e) => ({
     pathinfo: true
   },
   devtool: false,
+  optimization: {
+    sideEffects: true
+  },
   module: {
     // TODO: Make the rule work from **just** webpack config.
     // Setting `redux-little-router/package.json:sideEffects = false` works,
@@ -38,7 +40,6 @@ module.exports = ENTRY_POINTS.map((e) => ({
     ]
   },
   plugins: [
-    new SideEffectsFlagPlugin(),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
