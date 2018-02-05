@@ -2,7 +2,6 @@
 
 const path = require("path");
 const webpack = require("webpack");
-const SideEffectsFlagPlugin = require("webpack/lib/optimize/SideEffectsFlagPlugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const ENTRY_POINTS = [
@@ -29,13 +28,15 @@ module.exports = ENTRY_POINTS.map((e) => ({
     rules: [
       // https://github.com/webpack/webpack/issues/6065#issuecomment-351060570
       {
-        include: require.resolve("redux-little-router"),
+        test: /\.js$/,
+        include: [
+          path.resolve("node_modules/redux-little-router")
+        ],
         sideEffects: false
       }
     ]
   },
   plugins: [
-    new SideEffectsFlagPlugin(),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
