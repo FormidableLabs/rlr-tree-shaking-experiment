@@ -25,10 +25,9 @@ module.exports = ENTRY_POINTS.map((e) => ({
     sideEffects: true
   },
   module: {
-    // TODO: Make the rule work from **just** webpack config.
-    // Setting `redux-little-router/package.json:sideEffects = false` works,
-    // but I can't get the override only here to work.
     rules: [
+      // Manually force `redux-little-router` to have side effects false.
+      //
       // https://github.com/webpack/webpack/issues/6065#issuecomment-351060570
       {
         test: /\.js$/,
